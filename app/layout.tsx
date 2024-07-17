@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
+import Navbar from './_components/navbar'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -20,7 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={`${poppins.className} dark`}>
+        <div className="flex gap-10">
+          <Navbar />
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
