@@ -12,13 +12,14 @@ import React from 'react'
 import { Separator } from './ui/separator'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 
 const Navbar = () => {
   const pathname = usePathname()
   const navbarItems = [
     {
       label: 'Dashboard',
-      route: '/',
+      route: '/dashboard',
       icon: <LayoutDashboardIcon size={20} />,
     },
     {
@@ -41,9 +42,9 @@ const Navbar = () => {
   return (
     <div className="flex flex-col bg-slate-900 w-[350px] h-screen shadow justify-between">
       <div className="flex flex-col">
-        <div className="flex items-center gap-1 text-white mt-5 px-8">
+        <div className="flex items-center gap-1 text-white mt-5 px-8 font-bold">
           <HandCoinsIcon size={40} />
-          Panel Admin.
+          Panel Admin
         </div>
         <div className="pt-4 px-2">
           <Separator />
@@ -67,7 +68,10 @@ const Navbar = () => {
         </div>
       </div>
 
-      <button className="flex items-center gap-2 p-6 text-xs text-gray-300 transition hover:text-white w-max font-semibold">
+      <button
+        onClick={async () => await signOut()}
+        className="flex items-center gap-2 p-6 text-xs text-gray-300 transition hover:text-white w-max font-semibold"
+      >
         <LogOutIcon size={18} /> Sair
       </button>
     </div>
