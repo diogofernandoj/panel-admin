@@ -2,7 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
-import Navbar from './_components/navbar'
+import AuthProvider from './_providers/auth'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -10,8 +10,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Panel Admin',
-  description: 'A panel admin to manage your finances',
+  title: 'Login',
+  description: 'Insira seus dados para fazer login',
 }
 
 export default function RootLayout({
@@ -22,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} dark`}>
-        <div className="flex gap-10">
-          <Navbar />
-          {children}
-        </div>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   )
