@@ -3,11 +3,9 @@
 import React from 'react'
 import { Button } from '@/app/_components/ui/button'
 import { LogInIcon } from 'lucide-react'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 const Login = () => {
-  const { data } = useSession()
-
   const handleLoginClick = async () => {
     await signIn('google')
   }
@@ -22,7 +20,6 @@ const Login = () => {
         <LogInIcon size={20} />
         Fazer login
       </Button>
-      {data?.user ? <span>{data.user.name}</span> : <span>Não logado</span>}
     </div>
   )
 }
