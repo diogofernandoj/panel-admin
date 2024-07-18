@@ -5,8 +5,8 @@ import CardChart from './radial-progress'
 
 const Cards = () => {
   return (
-    <div className="flex items-center justify-center gap-6">
-      <Card className="w-64 bg-slate-900">
+    <div className="flex items-center gap-6">
+      <Card className="w-full bg-slate-900">
         <CardHeader className="bg-green-500 m-4 bg-opacity-10 w-max rounded-full p-2">
           <DollarSignIcon className="text-green-500" />
         </CardHeader>
@@ -21,7 +21,7 @@ const Cards = () => {
         </CardContent>
       </Card>
 
-      <Card className="w-64 bg-slate-900">
+      <Card className="w-full bg-slate-900">
         <CardHeader className="bg-red-500 m-4 bg-opacity-10 w-max rounded-full p-2">
           <DollarSignIcon className="text-red-500" />
         </CardHeader>
@@ -36,7 +36,7 @@ const Cards = () => {
         </CardContent>
       </Card>
 
-      <Card className="w-64 bg-slate-900">
+      <Card className="w-full bg-slate-900">
         <CardHeader className="bg-blue-500 m-4 bg-opacity-10 w-max rounded-full p-2">
           <ScaleIcon className="text-blue-500" />
         </CardHeader>

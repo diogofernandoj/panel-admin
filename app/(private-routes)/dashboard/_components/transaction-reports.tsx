@@ -43,7 +43,7 @@ const chartConfig = {
 
 const TransactionReports = () => {
   return (
-    <Card className="flex flex-col bg-slate-900 w-full">
+    <Card className="flex flex-col bg-slate-900">
       <CardHeader className="items-center pb-0">
         <CardTitle className="text-sm">Transaction Reports</CardTitle>
         <CardDescription className="text-xs">
