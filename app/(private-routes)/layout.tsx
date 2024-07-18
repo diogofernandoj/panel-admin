@@ -16,9 +16,9 @@ export default async function PrivateLayout({
   }
 
   return (
-    <>
+    <div className="flex">
       <Navbar />
       {children}
-    </>
+    </div>
   )
 }
