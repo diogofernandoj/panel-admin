@@ -16,13 +16,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/app/_components/ui/chart'
+
 const chartData = [
-  { date: '2024-07-15', earnings: 450, expenses: 300 },
-  { date: '2024-07-16', earnings: 380, expenses: 420 },
-  { date: '2024-07-17', earnings: 520, expenses: 120 },
-  { date: '2024-07-18', earnings: 140, expenses: 550 },
-  { date: '2024-07-19', earnings: 600, expenses: 350 },
-  { date: '2024-07-20', earnings: 480, expenses: 400 },
+  { date: '2024-07-15', entradas: 450, saidas: 300 },
+  { date: '2024-07-16', entradas: 380, saidas: 420 },
+  { date: '2024-07-17', entradas: 520, saidas: 120 },
+  { date: '2024-07-18', entradas: 140, saidas: 550 },
+  { date: '2024-07-19', entradas: 600, saidas: 350 },
+  { date: '2024-07-20', entradas: 480, saidas: 400 },
 ]
 
 const chartConfig = {
@@ -57,13 +58,13 @@ const TransactionBarChart = () => {
               }}
             />
             <Bar
-              dataKey="earnings"
+              dataKey="entradas"
               stackId="a"
               fill="var(--color-earning)"
               radius={[0, 0, 4, 4]}
             />
             <Bar
-              dataKey="expenses"
+              dataKey="saidas"
               stackId="a"
               fill="var(--color-expense)"
               radius={[4, 4, 0, 0]}
@@ -93,7 +94,7 @@ const TransactionBarChart = () => {
                         <div className="mt-1.5 flex basis-full items-center border-t pt-1.5 text-xs font-medium text-foreground">
                           Total
                           <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
-                            R${item.payload.earnings - item.payload.expenses}
+                            R${item.payload.entradas - item.payload.saidas}
                             <span className="font-normal text-muted-foreground"></span>
                           </div>
                         </div>
