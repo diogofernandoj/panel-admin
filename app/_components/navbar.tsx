@@ -40,7 +40,7 @@ const Navbar = () => {
   ]
 
   return (
-    <div className="flex flex-col bg-slate-900 w-[350px] h-screen shadow justify-between">
+    <div className="flex flex-col  w-[350px] h-screen border-r border-solid justify-between">
       <div className="flex flex-col">
         <div className="flex items-center gap-1 text-white mt-5 px-8 font-bold">
           <HandCoinsIcon size={40} />
@@ -57,9 +57,9 @@ const Navbar = () => {
               key={item.route}
               className={`${
                 pathname.startsWith(item.route)
-                  ? 'bg-slate-800 text-white'
+                  ? 'bg-secondary'
                   : 'text-gray-400'
-              } flex items-center gap-2 p-4 hover:text-white hover:bg-slate-700 transition rounded-lg`}
+              } flex items-center font-semibold gap-2 p-4 hover:text-white hover:bg-slate-700 transition rounded-lg`}
             >
               {item.icon}
               <span className="mt-1">{item.label}</span>
