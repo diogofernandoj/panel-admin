@@ -2,8 +2,27 @@ import { Card, CardContent, CardHeader } from '@/app/_components/ui/card'
 import { DollarSignIcon, ScaleIcon } from 'lucide-react'
 import React from 'react'
 import CardChart from './radial-progress'
+import { Transaction } from '@prisma/client'
+import { makeCurrencyNumber } from '@/app/_lib/utils'
 
-const Cards = () => {
+const Cards = ({ transactions }: { transactions: Transaction[] }) => {
+  const totalEarnings = transactions
+    .filter((transaction) => transaction.type)
+    .reduce((acc, curr) => acc + Number(curr.amount), 0)
+
+  const totalExpenses = transactions
+    .filter((transaction) => !transaction.type)
+    .reduce((acc, curr) => acc + Number(curr.amount), 0)
+
+  const totalBalance = totalEarnings - totalExpenses
+
+  const earningsPercentage =
+    (totalEarnings / (totalEarnings + totalExpenses)) * 100
+  const expensesPercentage =
+    (totalExpenses / (totalEarnings + totalExpenses)) * 100
+  const balancePercentage =
+    (totalBalance / (totalEarnings + totalExpenses)) * 100
+
   return (
     <div className="flex items-center gap-6">
       <Card className="w-full ">
@@ -13,10 +32,15 @@ const Cards = () => {
         <CardContent>
           <div className="flex justify-between items-end">
             <div className="flex flex-col">
-              <span className="font-bold text-sm">R$45,90</span>
-              <span className="text-gray-400 text-xs">Earnings</span>
+              <span className="font-bold text-sm">
+                {makeCurrencyNumber(totalEarnings)}
+              </span>
+              <span className="text-gray-400 text-xs">Entradas</span>
             </div>
-            <CardChart percentage={63} barColor="green-500" />
+            <CardChart
+              percentage={Number(earningsPercentage.toFixed(0))}
+              barColor="green-500"
+            />
           </div>
         </CardContent>
       </Card>
@@ -28,10 +52,15 @@ const Cards = () => {
         <CardContent>
           <div className="flex justify-between items-end">
             <div className="flex flex-col">
-              <span className="font-bold text-sm">R$458,95</span>
-              <span className="text-gray-400 text-xs">Expenses</span>
+              <span className="font-bold text-sm">
+                {makeCurrencyNumber(totalExpenses)}
+              </span>
+              <span className="text-gray-400 text-xs">Saídas</span>
             </div>
-            <CardChart percentage={37} barColor="red-500" />
+            <CardChart
+              percentage={Number(expensesPercentage.toFixed(0))}
+              barColor="red-500"
+            />
           </div>
         </CardContent>
       </Card>
@@ -43,10 +72,15 @@ const Cards = () => {
         <CardContent>
           <div className="flex justify-between items-end">
             <div className="flex flex-col">
-              <span className="font-bold text-sm">R$205,76</span>
-              <span className="text-gray-400 text-xs">Balance</span>
+              <span className="font-bold text-sm">
+                {makeCurrencyNumber(totalBalance)}
+              </span>
+              <span className="text-gray-400 text-xs">Balanço</span>
             </div>
-            <CardChart percentage={26} barColor="blue-500" />
+            <CardChart
+              percentage={Number(balancePercentage.toFixed(0))}
+              barColor="blue-500"
+            />
           </div>
         </CardContent>
       </Card>
