@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
 import AuthProvider from './_providers/auth'
+import { cookies } from 'next/headers'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -19,9 +20,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const theme = cookies().get('theme')?.value ?? ''
+
   return (
     <html lang="en">
-      <body className={`${poppins.className} dark`}>
+      <body className={`${poppins.className} ${theme}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
