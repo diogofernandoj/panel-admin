@@ -36,11 +36,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-const TransactionChart = () => {
+const TransactionBarChart = () => {
   return (
-    <Card className="bg-slate-900 w-full flex-1">
+    <Card className=" w-full flex-1">
       <CardHeader>
-        <CardTitle>Transações</CardTitle>
+        <CardTitle className="text-base">Transações</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -112,4 +112,4 @@ const TransactionChart = () => {
   )
 }
 
-export default TransactionChart
+export default TransactionBarChart
