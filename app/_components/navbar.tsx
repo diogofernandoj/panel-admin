@@ -10,7 +10,7 @@ import {
   SunIcon,
   UsersIcon,
 } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Separator } from './ui/separator'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -20,9 +20,13 @@ import { toggleTheme } from '../_actions/toggle-theme'
 import { parseCookies } from 'nookies'
 
 const Navbar = () => {
-  const cookies = parseCookies()
-  const initialTheme = cookies.theme || 'light'
-  const [theme, setTheme] = useState(initialTheme)
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    const cookies = parseCookies()
+    const initialTheme = cookies.theme || 'light'
+    setTheme(initialTheme)
+  }, [])
 
   const handleSwitchThemeClick = async () => {
     const newTheme = await toggleTheme()
