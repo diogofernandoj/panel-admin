@@ -18,7 +18,7 @@ const Login = () => {
         onClick={handleLoginClick}
       >
         <LogInIcon size={20} />
-        Fazer login
+        Fazer login com o Google
       </Button>
     </div>
   )
