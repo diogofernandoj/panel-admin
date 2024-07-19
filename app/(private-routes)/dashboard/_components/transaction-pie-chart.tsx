@@ -7,7 +7,6 @@ import { Pie, PieChart } from 'recharts'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/app/_components/ui/card'
@@ -41,14 +40,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-const TransactionReports = () => {
+const TransactionPieChart = () => {
   return (
-    <Card className="flex flex-col bg-slate-900">
-      <CardHeader className="items-center pb-0">
-        <CardTitle className="text-sm">Transaction Reports</CardTitle>
-        <CardDescription className="text-xs">
-          January - June 2024
-        </CardDescription>
+    <Card className="flex flex-col ">
+      <CardHeader>
+        <CardTitle className="text-sm">Relatório mensal</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -68,4 +64,4 @@ const TransactionReports = () => {
   )
 }
 
-export default TransactionReports
+export default TransactionPieChart
