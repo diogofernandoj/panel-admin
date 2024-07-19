@@ -16,9 +16,11 @@ export default async function PrivateLayout({
   }
 
   return (
-    <div className="flex">
-      <Navbar />
-      {children}
+    <div>
+      <div className="fixed">
+        <Navbar />
+      </div>
+      <div className="pl-[350px]">{children}</div>
     </div>
   )
 }
