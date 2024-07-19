@@ -14,29 +14,32 @@ datasource db {
 }
 
 model Transaction {
-  id String @id @default(uuid())
-  title String
-  date DateTime
-  amount Decimal @db.Decimal(10, 2)
-  type Boolean
+  id     String   @id @default(uuid())
+  title  String
+  date   DateTime
+  amount Decimal  @db.Decimal(10, 2)
+  type   Boolean
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String          @unique
+  email         String        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  transactions  Transaction[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -49,29 +52,29 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
