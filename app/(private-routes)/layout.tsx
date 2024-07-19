@@ -3,6 +3,12 @@ import React, { ReactNode } from 'react'
 import { redirect } from 'next/navigation'
 import { authOptions } from '../_lib/auth'
 import Navbar from '../_components/navbar'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+  description: 'Gerencie suas finanças e acesse relatórios',
+}
 
 export default async function PrivateLayout({
   children,
