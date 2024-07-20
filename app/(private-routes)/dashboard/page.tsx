@@ -23,7 +23,7 @@ const Dashboard = async () => {
       <Cards transactions={transactions} />
       <div className="flex gap-6">
         <div className="flex flex-col gap-6 w-full">
-          <TransactionBarChart />
+          <TransactionBarChart transactions={transactions} />
           <TransactionHistory />
         </div>
         <div className="flex flex-col gap-6">

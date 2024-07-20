@@ -1,6 +1,7 @@
+/* eslint-disable no-case-declarations */
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Bar, BarChart, XAxis } from 'recharts'
 
@@ -16,15 +17,17 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/app/_components/ui/chart'
-
-const chartData = [
-  { date: '2024-07-15', entradas: 450, saidas: 300 },
-  { date: '2024-07-16', entradas: 380, saidas: 420 },
-  { date: '2024-07-17', entradas: 520, saidas: 120 },
-  { date: '2024-07-18', entradas: 140, saidas: 550 },
-  { date: '2024-07-19', entradas: 600, saidas: 350 },
-  { date: '2024-07-20', entradas: 480, saidas: 400 },
-]
+import { Transaction } from '@prisma/client'
+import { generateDateRange, isWithinPeriod } from '@/app/_lib/utils'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/_components/ui/select'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 const chartConfig = {
   earning: {
@@ -37,11 +40,115 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-const TransactionBarChart = () => {
+type ChartData = {
+  date: string
+  entradas: number
+  saidas: number
+}
+
+type Period = 'weekly' | 'monthly' | 'yearly'
+
+const TransactionBarChart = ({
+  transactions,
+}: {
+  transactions: Transaction[]
+}) => {
+  const [chartData, setChartData] = useState<ChartData[]>([])
+  const [period, setPeriod] = useState<Period>('weekly')
+
+  const getTick = () => {
+    if (period === 'weekly') {
+      return 'eeeeee'
+    }
+
+    if (period === 'monthly') {
+      return 'd'
+    }
+
+    return 'MMM'
+  }
+
+  useEffect(() => {
+    const currentDate = new Date()
+    const startDate = new Date()
+    switch (period) {
+      case 'weekly':
+        startDate.setDate(currentDate.getDate() - 6)
+        break
+      case 'monthly':
+        startDate.setDate(1)
+        break
+      case 'yearly':
+        startDate.setFullYear(new Date().getFullYear(), 0, 1)
+        break
+    }
+
+    const dateRange = generateDateRange(startDate, currentDate, period)
+
+    const initialData: ChartData[] = dateRange.map((date) => ({
+      date,
+      entradas: 0,
+      saidas: 0,
+    }))
+
+    const filteredTransactions = transactions.filter((transaction) =>
+      isWithinPeriod(transaction.date, period)
+    )
+
+    const data = filteredTransactions.reduce<ChartData[]>(
+      (acc, transaction) => {
+        const { date, type, amount } = transaction
+        const formattedDate =
+          period === 'yearly'
+            ? date.toISOString().slice(0, 7)
+            : date.toISOString().split('T')[0]
+
+        let dateEntry = acc.find((entry) => entry.date === formattedDate)
+
+        if (!dateEntry) {
+          dateEntry = { date: formattedDate, entradas: 0, saidas: 0 }
+          acc.push(dateEntry)
+        }
+
+        if (type) {
+          dateEntry.entradas += Number(amount)
+        } else if (!type) {
+          dateEntry.saidas += Number(amount)
+        }
+
+        return acc
+      },
+      initialData
+    )
+
+    setChartData(data)
+  }, [period])
+
   return (
     <Card className=" w-full flex-1">
       <CardHeader>
-        <CardTitle className="text-base">Transações</CardTitle>
+        <CardTitle className="text-base flex justify-between items-center">
+          Transações
+          <Select
+            defaultValue="weekly"
+            onValueChange={(value: Period) => setPeriod(value)}
+          >
+            <SelectTrigger className="w-max text-xs">
+              <SelectValue placeholder="Período" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem className="text-xs" value="weekly">
+                Semanal
+              </SelectItem>
+              <SelectItem className="text-xs" value="monthly">
+                Mensal
+              </SelectItem>
+              <SelectItem className="text-xs" value="yearly">
+                Anual
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -52,9 +159,13 @@ const TransactionBarChart = () => {
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value) => {
-                return new Date(value).toLocaleDateString('en-US', {
-                  weekday: 'short',
-                })
+                return format(
+                  new Date(new Date(value).setUTCHours(3)).toISOString(),
+                  getTick(),
+                  {
+                    locale: ptBR,
+                  }
+                )
               }}
             />
             <Bar
@@ -89,7 +200,6 @@ const TransactionBarChart = () => {
                       <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
                         R${value}
                       </div>
-                      {/* Add this after the last item */}
                       {index === 1 && (
                         <div className="mt-1.5 flex basis-full items-center border-t pt-1.5 text-xs font-medium text-foreground">
                           Total
