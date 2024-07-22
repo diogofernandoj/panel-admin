@@ -17,23 +17,24 @@ export const isWithinPeriod = (
   date: Date,
   period: 'weekly' | 'monthly' | 'yearly'
 ): boolean => {
-  const currentDate = new Date()
-  const transactionDate = new Date(date)
+  const currentDate = new Date(new Date().setUTCHours(3, 0, 0, 0))
+  const transactionDate = new Date(new Date(date).setUTCHours(3, 0, 0, 0))
 
   switch (period) {
     case 'weekly':
-      const weekAgo = new Date()
-      weekAgo.setDate(currentDate.getDate() - 6)
+      const weekAgo = new Date(
+        new Date(currentDate).setDate(currentDate.getDate() - 6)
+      )
       return transactionDate >= weekAgo && transactionDate <= currentDate
 
     case 'monthly':
-      const fullMonth = new Date()
-      fullMonth.setDate(1)
+      const fullMonth = new Date(new Date(currentDate).setDate(1))
       return transactionDate >= fullMonth && transactionDate <= currentDate
 
     case 'yearly':
-      const fullYear = new Date()
-      fullYear.setFullYear(new Date().getFullYear(), 0, 1)
+      const fullYear = new Date(
+        new Date(currentDate).setFullYear(new Date().getFullYear(), 0, 1)
+      )
       return transactionDate >= fullYear && transactionDate <= currentDate
 
     default:
