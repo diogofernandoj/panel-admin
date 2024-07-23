@@ -9,31 +9,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/_components/ui/table'
-import { db } from '@/app/_lib/prisma'
 import { Transaction } from '@prisma/client'
 import { CircleArrowDownIcon, CircleArrowUpIcon } from 'lucide-react'
 import { format } from 'date-fns'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/_lib/auth'
 import { makeCurrencyNumber } from '@/app/_lib/utils'
 import { Card } from '@/app/_components/ui/card'
 
-const TransactionHistory = async () => {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.user) {
-    return null
-  }
-
-  const transactions: Transaction[] = await db.transaction.findMany({
-    where: {
-      userId: session.user.id,
-      // date: new Date(
-      //   new Date(new Date().setUTCHours(-3, 0, 0, 0)).setUTCHours(0)
-      // ),
-    },
-  })
-
+const TransactionHistory = ({
+  transactions,
+}: {
+  transactions: Transaction[]
+}) => {
   const data = transactions.sort((a, b) => Number(b.date) - Number(a.date))
   const totalAmount = transactions.reduce(
     (acc, curr) =>
