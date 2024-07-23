@@ -18,7 +18,7 @@ import {
   ChartTooltipContent,
 } from '@/app/_components/ui/chart'
 import { Transaction } from '@prisma/client'
-import { generateDateRange, isWithinPeriod } from '@/app/_lib/utils'
+import { generateDateRange, Period } from '@/app/_lib/utils'
 import {
   Select,
   SelectContent,
@@ -46,15 +46,18 @@ type ChartData = {
   saidas: number
 }
 
-type Period = 'weekly' | 'monthly' | 'yearly'
+interface TransactionBarChartProps {
+  transactions: Transaction[]
+  period: Period
+  setPeriod: (value: Period) => void
+}
 
 const TransactionBarChart = ({
   transactions,
-}: {
-  transactions: Transaction[]
-}) => {
+  period,
+  setPeriod,
+}: TransactionBarChartProps) => {
   const [chartData, setChartData] = useState<ChartData[]>([])
-  const [period, setPeriod] = useState<Period>('weekly')
 
   const getTick = () => {
     if (period === 'weekly') {
@@ -69,8 +72,8 @@ const TransactionBarChart = ({
   }
 
   useEffect(() => {
-    const currentDate = new Date()
-    const startDate = new Date()
+    const currentDate = new Date(new Date().setUTCHours(3, 0, 0, 0))
+    const startDate = new Date(new Date().setUTCHours(3, 0, 0, 0))
     switch (period) {
       case 'weekly':
         startDate.setDate(currentDate.getDate() - 6)
@@ -91,38 +94,31 @@ const TransactionBarChart = ({
       saidas: 0,
     }))
 
-    const filteredTransactions = transactions.filter((transaction) =>
-      isWithinPeriod(transaction.date, period)
-    )
+    const data = transactions.reduce<ChartData[]>((acc, transaction) => {
+      const { date, type, amount } = transaction
+      const formattedDate =
+        period === 'yearly'
+          ? date.toISOString().slice(0, 7)
+          : date.toISOString().split('T')[0]
 
-    const data = filteredTransactions.reduce<ChartData[]>(
-      (acc, transaction) => {
-        const { date, type, amount } = transaction
-        const formattedDate =
-          period === 'yearly'
-            ? date.toISOString().slice(0, 7)
-            : date.toISOString().split('T')[0]
+      let dateEntry = acc.find((entry) => entry.date === formattedDate)
 
-        let dateEntry = acc.find((entry) => entry.date === formattedDate)
+      if (!dateEntry) {
+        dateEntry = { date: formattedDate, entradas: 0, saidas: 0 }
+        acc.push(dateEntry)
+      }
 
-        if (!dateEntry) {
-          dateEntry = { date: formattedDate, entradas: 0, saidas: 0 }
-          acc.push(dateEntry)
-        }
+      if (type) {
+        dateEntry.entradas += Number(amount)
+      } else if (!type) {
+        dateEntry.saidas += Number(amount)
+      }
 
-        if (type) {
-          dateEntry.entradas += Number(amount)
-        } else if (!type) {
-          dateEntry.saidas += Number(amount)
-        }
-
-        return acc
-      },
-      initialData
-    )
+      return acc
+    }, initialData)
 
     setChartData(data)
-  }, [period])
+  }, [period, transactions])
 
   return (
     <Card className=" w-full flex-1">
