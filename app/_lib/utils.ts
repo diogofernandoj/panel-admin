@@ -1,10 +1,13 @@
 /* eslint-disable no-case-declarations */
+import { Transaction } from '@prisma/client'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export type Period = 'weekly' | 'monthly' | 'yearly'
 
 export const makeCurrencyNumber = (number: number) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -64,3 +67,9 @@ export const generateDateRange = (
 
   return dates
 }
+
+export const getFilteredTransactions = (
+  transactions: Transaction[],
+  period: Period
+) =>
+  transactions.filter((transaction) => isWithinPeriod(transaction.date, period))
