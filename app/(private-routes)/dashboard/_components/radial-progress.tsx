@@ -13,7 +13,7 @@ const RadialProgress = ({
       style={{ '--value': percentage, '--size': '3rem' } as React.CSSProperties}
       role="progressbar"
     >
-      <h3 className="text-xs font-semibold text-white">{percentage}%</h3>
+      <h3 className="text-xs font-semibold text-primary">{percentage}%</h3>
     </div>
   )
 }
