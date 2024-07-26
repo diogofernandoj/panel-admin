@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 
 import Cards from './cards'
 import TransactionBarChart from './transaction-bar-chart'
-import TransactionPieChart from './transaction-pie-chart'
 import { Transaction } from '@prisma/client'
 import { getFilteredTransactions, Period } from '@/app/_lib/utils'
 import TransactionHistory from './transaction-history'
@@ -40,9 +39,7 @@ const DashboardContent = ({
           />
           <TransactionHistory transactions={filteredTransactions} />
         </div>
-        <div className="flex flex-col gap-6 w-1/3">
-          <TransactionPieChart />
-        </div>
+        <div className="flex flex-col gap-6 w-1/3"></div>
       </div>
     </div>
   )
