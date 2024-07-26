@@ -23,7 +23,7 @@ const DashboardContent = ({
       setFilteredTransactions(getFilteredTransactions(transactions, period))
     }
     filterTransactions()
-  }, [period])
+  }, [transactions, period])
 
   if (!filteredTransactions) return null
 
