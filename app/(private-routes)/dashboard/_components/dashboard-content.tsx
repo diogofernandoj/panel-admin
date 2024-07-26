@@ -15,8 +15,8 @@ const DashboardContent = ({
 }) => {
   const [period, setPeriod] = useState<Period>('weekly')
   const [filteredTransactions, setFilteredTransactions] = useState<
-    Transaction[] | null
-  >(null)
+    Transaction[]
+  >([])
 
   useEffect(() => {
     const filterTransactions = () => {
@@ -24,8 +24,6 @@ const DashboardContent = ({
     }
     filterTransactions()
   }, [transactions, period])
-
-  if (!filteredTransactions) return null
 
   return (
     <div className="flex flex-col gap-6">
