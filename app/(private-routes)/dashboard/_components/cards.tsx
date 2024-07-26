@@ -17,11 +17,11 @@ const Cards = ({ transactions }: { transactions: Transaction[] }) => {
   const totalBalance = totalEarnings - totalExpenses
 
   const earningsPercentage =
-    (totalEarnings / (totalEarnings + totalExpenses)) * 100
+    ((totalEarnings / (totalEarnings + totalExpenses)) * 100) | 0
   const expensesPercentage =
-    (totalExpenses / (totalEarnings + totalExpenses)) * 100
+    ((totalExpenses / (totalEarnings + totalExpenses)) * 100) | 0
   const balancePercentage =
-    (totalBalance / (totalEarnings + totalExpenses)) * 100
+    ((totalBalance / (totalEarnings + totalExpenses)) * 100) | 0
 
   return (
     <div className="flex items-center gap-6">
