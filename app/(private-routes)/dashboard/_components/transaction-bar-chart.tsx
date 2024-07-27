@@ -32,11 +32,11 @@ import { ptBR } from 'date-fns/locale'
 const chartConfig = {
   earning: {
     label: 'Entradas',
-    color: 'green',
+    color: '#22c55e',
   },
   expense: {
     label: 'Saídas',
-    color: '#22c55e',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
 
@@ -200,7 +200,10 @@ const TransactionBarChart = ({
                         <div className="mt-1.5 flex basis-full items-center border-t pt-1.5 text-xs font-medium text-foreground">
                           Total
                           <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
-                            R${item.payload.entradas - item.payload.saidas}
+                            R$
+                            {(
+                              item.payload.entradas - item.payload.saidas
+                            ).toFixed(2)}
                             <span className="font-normal text-muted-foreground"></span>
                           </div>
                         </div>
