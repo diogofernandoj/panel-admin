@@ -6,7 +6,6 @@ import Cards from './cards'
 import TransactionBarChart from './transaction-bar-chart'
 import { Transaction } from '@prisma/client'
 import { getFilteredTransactions, Period } from '@/app/_lib/utils'
-import TransactionHistory from './transaction-history'
 import TransactionRadialChart from './transaction-radial-chart'
 import TransactionAreaChart from './transaction-area-chart'
 
@@ -37,7 +36,6 @@ const DashboardContent = ({
             period={period}
             setPeriod={setPeriod}
           />
-          <TransactionHistory transactions={filteredTransactions} />
         </div>
         <div className="flex flex-col gap-6 w-1/3">
           <TransactionRadialChart
