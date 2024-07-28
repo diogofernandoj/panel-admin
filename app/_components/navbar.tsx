@@ -8,7 +8,6 @@ import {
   MoonIcon,
   SettingsIcon,
   SunIcon,
-  UsersIcon,
 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Separator } from './ui/separator'
@@ -44,11 +43,6 @@ const Navbar = () => {
       label: 'Transações',
       route: '/transactions',
       icon: <ArrowLeftRightIcon size={20} />,
-    },
-    {
-      label: 'Funcionários',
-      route: '/workers',
-      icon: <UsersIcon size={20} />,
     },
     {
       label: 'Configurações',
@@ -97,7 +91,7 @@ const Navbar = () => {
 
       <button
         onClick={async () => await signOut()}
-        className="flex items-center gap-2 p-6 text-xs text-gray-300 transition hover:text-white w-max font-semibold"
+        className="flex items-center gap-2 p-6 text-xs text-foreground opacity-50 transition hover:opacity-100 w-max font-semibold"
       >
         <LogOutIcon size={18} /> Sair
       </button>
