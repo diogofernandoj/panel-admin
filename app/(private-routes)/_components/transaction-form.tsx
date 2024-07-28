@@ -70,7 +70,7 @@ const TransactionForm = ({
 
     setIsOpen(false)
     toast({
-      title: 'Transação criada com sucesso!',
+      title: 'Transação adicionada com sucesso!',
     })
   }
 

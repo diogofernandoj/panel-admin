@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { authOptions } from '../_lib/auth'
 import Navbar from '../_components/navbar'
 import { Metadata } from 'next'
+import DashboardHeader from './_components/dashboard-header'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -26,7 +27,12 @@ export default async function PrivateLayout({
       <div className="fixed">
         <Navbar />
       </div>
-      <div className="pl-[350px]">{children}</div>
+      <div className="pl-[350px]">
+        <div className="pt-4 px-6">
+          <DashboardHeader />
+        </div>
+        {children}
+      </div>
     </div>
   )
 }

@@ -3,13 +3,13 @@
 import React, { useState } from 'react'
 import { Button } from '@/app/_components/ui/button'
 import { CirclePlusIcon } from 'lucide-react'
-import TransactionForm from './transaction-form'
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from '@/app/_components/ui/dialog'
+import TransactionForm from './transaction-form'
 
 const AddTransaction = () => {
   const [open, setIsOpen] = useState(false)
