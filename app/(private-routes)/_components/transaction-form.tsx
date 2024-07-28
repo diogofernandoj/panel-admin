@@ -33,6 +33,9 @@ import { cn } from '@/app/_lib/utils'
 import CurrencyInput from 'react-currency-input-field'
 import { createTransaction } from '@/app/_actions/create-transaction'
 import { useToast } from '@/app/_components/ui/use-toast'
+import { Transaction } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import { editTransaction } from '@/app/_actions/edit-transaction'
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -40,27 +43,45 @@ const formSchema = z.object({
   }),
   date: z.date({ required_error: 'A data é obrigatória.' }),
   type: z.string(),
-  amount: z.string().min(1, { message: 'O valor não pode ficar em branco.' }),
+  amount: z.any({ required_error: 'O valor não pode ficar em branco.' }),
 })
 
-const TransactionForm = ({
-  setIsOpen,
-}: {
-  setIsOpen: (value: boolean) => void
-}) => {
+interface TransactionFormProps {
+  setIsOpen?: (value: boolean) => void
+  transaction?: Transaction
+}
+
+const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
   const { toast } = useToast()
+  const { replace } = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      type: '1',
-      date: undefined,
-      amount: '',
+      title: transaction?.title || '',
+      type: !transaction?.type ? '0' : '1',
+      date: transaction?.date || undefined,
+      amount: transaction?.amount || '',
     },
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (transaction) {
+      await editTransaction({
+        id: transaction.id,
+        data: {
+          title: values.title,
+          date: values.date,
+          type: !!Number(values.type),
+          amount: parseFloat(values.amount.replace(',', '.')),
+        },
+      })
+      toast({
+        title: 'Transação atualizada com sucesso!',
+      })
+      return replace('/transactions')
+    }
+
     await createTransaction({
       title: values.title,
       date: values.date,
@@ -68,10 +89,22 @@ const TransactionForm = ({
       amount: parseFloat(values.amount.replace(',', '.')),
     })
 
-    setIsOpen(false)
+    if (setIsOpen) {
+      setIsOpen(false)
+    }
     toast({
       title: 'Transação adicionada com sucesso!',
     })
+  }
+
+  const handleCancelButtonClick = () => {
+    if (transaction) {
+      replace('/transactions')
+    }
+
+    if (setIsOpen) {
+      setIsOpen(false)
+    }
   }
 
   return (
@@ -174,7 +207,6 @@ const TransactionForm = ({
                 <CurrencyInput
                   className="bg-background border border-solid border-secondary rounded-sm p-2 w-full flex-1"
                   placeholder="R$ 0,00"
-                  defaultValue={0}
                   decimalsLimit={2}
                   intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
                   value={field.value}
@@ -187,7 +219,16 @@ const TransactionForm = ({
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <div className="flex items-center justify-end">
+          <Button
+            variant="ghost"
+            type="button"
+            onClick={handleCancelButtonClick}
+          >
+            Cancelar
+          </Button>
+          <Button type="submit">Salvar</Button>
+        </div>
       </form>
     </Form>
   )
