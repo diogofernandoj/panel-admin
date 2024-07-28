@@ -48,7 +48,7 @@ const TransactionRadialChart = ({
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square min-w-max max-h-[250px]"
         >
           <RadialBarChart
             data={chartData}
