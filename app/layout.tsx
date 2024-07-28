@@ -4,6 +4,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import AuthProvider from './_providers/auth'
 import { cookies } from 'next/headers'
+import { Toaster } from './_components/ui/toaster'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} ${theme}`}>
         <AuthProvider>{children}</AuthProvider>
+        <Toaster />
       </body>
     </html>
   )
