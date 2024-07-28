@@ -27,25 +27,23 @@ const DashboardContent = ({
   }, [transactions, period])
 
   return (
-    <div className="flex flex-col gap-6">
-      <Cards transactions={filteredTransactions} />
-      <div className="flex gap-6">
-        <div className="flex flex-col gap-6 w-full">
-          <TransactionBarChart
-            transactions={filteredTransactions}
-            period={period}
-            setPeriod={setPeriod}
-          />
-        </div>
-        <div className="flex flex-col gap-6 w-1/3">
-          <TransactionRadialChart
-            totalTransactions={filteredTransactions.length}
-          />
-          <TransactionAreaChart
-            transactions={filteredTransactions}
-            period={period}
-          />
-        </div>
+    <div className="flex gap-6">
+      <div className="flex flex-col gap-6 w-full">
+        <Cards transactions={filteredTransactions} />
+        <TransactionBarChart
+          transactions={filteredTransactions}
+          period={period}
+          setPeriod={setPeriod}
+        />
+      </div>
+      <div className="flex flex-col gap-6 w-1/3">
+        <TransactionRadialChart
+          totalTransactions={filteredTransactions.length}
+        />
+        <TransactionAreaChart
+          transactions={filteredTransactions}
+          period={period}
+        />
       </div>
     </div>
   )
