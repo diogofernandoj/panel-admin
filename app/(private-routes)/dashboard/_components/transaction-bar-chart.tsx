@@ -121,7 +121,7 @@ const TransactionBarChart = ({
   }, [period, transactions])
 
   return (
-    <Card className=" w-full flex-1">
+    <Card className="w-full flex-1">
       <CardHeader>
         <CardTitle className="text-base flex justify-between items-center">
           Transações
@@ -146,7 +146,7 @@ const TransactionBarChart = ({
           </Select>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <XAxis

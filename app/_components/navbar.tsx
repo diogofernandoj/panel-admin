@@ -6,7 +6,6 @@ import {
   LayoutDashboardIcon,
   LogOutIcon,
   MoonIcon,
-  SettingsIcon,
   SunIcon,
 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
@@ -43,11 +42,6 @@ const Navbar = () => {
       label: 'Transações',
       route: '/transactions',
       icon: <ArrowLeftRightIcon size={20} />,
-    },
-    {
-      label: 'Configurações',
-      route: '/settings',
-      icon: <SettingsIcon size={20} />,
     },
   ]
 
