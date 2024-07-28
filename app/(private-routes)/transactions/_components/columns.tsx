@@ -31,7 +31,8 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: 'date',
     header: 'Data',
     cell: ({ row }) => {
-      return <span>{format(row.original.date, 'dd-MM-yyyy')}</span>
+      const date = new Date(new Date(row.original.date).setUTCHours(3, 0, 0, 0))
+      return <span>{format(date, 'dd-MM-yyyy')}</span>
     },
   },
   {
