@@ -46,7 +46,7 @@ const Navbar = () => {
   ]
 
   return (
-    <div className="flex flex-col  w-[350px] h-screen border-r border-solid justify-between">
+    <div className="flex flex-col  w-[300px] h-screen border-r border-solid justify-between">
       <div className="flex flex-col">
         <div className="flex items-center justify-between mt-5 px-8">
           <div className="flex items-center gap-1 text-primary font-bold">
