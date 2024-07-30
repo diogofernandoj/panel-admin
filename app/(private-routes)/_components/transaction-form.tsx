@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -55,6 +55,8 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
   const { toast } = useToast()
   const { replace } = useRouter()
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,6 +68,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true)
     if (transaction) {
       await editTransaction({
         id: transaction.id,
@@ -111,6 +114,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
+          disabled={loading}
           control={form.control}
           name="title"
           render={({ field }) => (
@@ -134,7 +138,11 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           render={({ field }) => (
             <FormItem className="flex items-center gap-4">
               <FormLabel className="w-1/6">Tipo</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                disabled={loading}
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full flex-1">
                     <SelectValue placeholder="Selecione o tipo da transação" />
@@ -163,12 +171,13 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           name="date"
           render={({ field }) => (
             <FormItem className="flex items-center gap-4">
-              <FormLabel className="w-1/6">Pagamento</FormLabel>
+              <FormLabel className="w-1/6">Data</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={'outline'}
+                      disabled={loading}
+                      variant="outline"
                       className={cn(
                         'w-full pl-3 text-left flex-1',
                         !field.value && 'text-muted-foreground'
@@ -205,7 +214,8 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
               <FormLabel className="w-1/6">Valor</FormLabel>
               <FormControl>
                 <CurrencyInput
-                  className="bg-background border border-solid border-secondary rounded-sm p-2 w-full flex-1"
+                  disabled={loading}
+                  className={`bg-background border border-solid border-secondary rounded-sm p-2 w-full flex-1 ${loading && 'opacity-50 cursor-not-allowed'}`}
                   placeholder="R$ 0,00"
                   decimalsLimit={2}
                   intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
@@ -221,13 +231,16 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
 
         <div className="flex items-center justify-end">
           <Button
+            disabled={loading}
             variant="ghost"
             type="button"
             onClick={handleCancelButtonClick}
           >
             Cancelar
           </Button>
-          <Button type="submit">Salvar</Button>
+          <Button disabled={loading} type="submit">
+            Salvar
+          </Button>
         </div>
       </form>
     </Form>
