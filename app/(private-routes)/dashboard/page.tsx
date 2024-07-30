@@ -1,15 +1,14 @@
 import React from 'react'
 import { db } from '@/app/_lib/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/_lib/auth'
+import { auth } from '@/app/_lib/auth'
 import DashboardContent from './_components/dashboard-content'
 import DashboardHeader from '../_components/dashboard-header'
 
 const DashboardPage = async () => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   const transactions = await db.transaction.findMany({
     where: {
-      userId: session?.user.id,
+      userId: session?.user?.id,
     },
   })
 

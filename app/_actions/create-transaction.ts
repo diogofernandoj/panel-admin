@@ -1,8 +1,7 @@
 'use server'
 
-import { getServerSession } from 'next-auth'
 import { db } from '../_lib/prisma'
-import { authOptions } from '../_lib/auth'
+import { auth } from '../_lib/auth'
 import { revalidatePath } from 'next/cache'
 
 interface createTransactionProps {
@@ -13,7 +12,7 @@ interface createTransactionProps {
 }
 
 export const createTransaction = async (params: createTransactionProps) => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (!session?.user) {
     return { statusCode: 404, errorMessage: 'User not found' }
@@ -21,7 +20,7 @@ export const createTransaction = async (params: createTransactionProps) => {
 
   const transaction = await db.transaction.create({
     data: {
-      userId: session?.user.id,
+      userId: session?.user?.id as string,
       title: params.title,
       date: new Date(new Date(params.date).setUTCHours(0)),
       type: params.type,

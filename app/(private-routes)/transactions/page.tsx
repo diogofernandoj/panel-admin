@@ -1,14 +1,13 @@
 import React from 'react'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/_lib/auth'
+import { auth } from '@/app/_lib/auth'
 import { db } from '@/app/_lib/prisma'
 import TransactionsContent from './_components/transactions-content'
 
 const TransactionsPage = async () => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   const transactions = await db.transaction.findMany({
     where: {
-      userId: session?.user.id,
+      userId: session?.user?.id,
     },
   })
 

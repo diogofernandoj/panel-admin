@@ -1,15 +1,14 @@
 'use server'
 
-import { getServerSession } from 'next-auth'
 import { db } from '../_lib/prisma'
-import { authOptions } from '../_lib/auth'
+import { auth } from '../_lib/auth'
 import { revalidatePath } from 'next/cache'
 
 export const deleteTransaction = async (transactionId: string) => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
-  if (!session?.user) {
-    return { statusCode: 404, errorMessage: 'User not found' }
+  if (!session?.user?.id) {
+    return { statusCode: 400, errorMessage: 'Property user id is missing' }
   }
 
   const transaction = await db.transaction.delete({
