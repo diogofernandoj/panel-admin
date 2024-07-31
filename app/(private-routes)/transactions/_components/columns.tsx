@@ -30,28 +30,36 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'date',
     header: () => {
-      return <span className="text-xs">Data</span>
+      return <span className="text-xs lg:text-sm">Data</span>
     },
     cell: ({ row }) => {
       const date = new Date(new Date(row.original.date).setUTCHours(3, 0, 0, 0))
-      return <span className="text-[10px]">{format(date, 'dd-MM-yyyy')}</span>
+      return (
+        <span className="text-[10px] lg:text-sm">
+          {format(date, 'dd-MM-yyyy')}
+        </span>
+      )
     },
   },
   {
     accessorKey: 'title',
-    header: 'Título',
+    header: () => {
+      return <span className="text-xs lg:text-sm">Título</span>
+    },
     cell: ({ row }) => {
-      return <span className="text-[10px]">{row.original.title}</span>
+      return (
+        <span className="text-[10px] lg:text-sm">{row.original.title}</span>
+      )
     },
   },
   {
     accessorKey: 'amount',
     header: () => {
-      return <span className="text-xs">Valor</span>
+      return <span className="text-xs lg:text-sm">Valor</span>
     },
     cell: ({ row }) => {
       return (
-        <span className="text-[10px]">
+        <span className="text-[10px] lg:text-sm">
           {makeCurrencyNumber(Number(row.original.amount))}
         </span>
       )
