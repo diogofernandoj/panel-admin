@@ -120,7 +120,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4">
+            <FormItem className="flex flex-col">
               <FormLabel className="w-1/6">Título</FormLabel>
               <FormControl>
                 <Input
@@ -138,7 +138,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           control={form.control}
           name="type"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4">
+            <FormItem className="flex flex-col">
               <FormLabel className="w-1/6">Tipo</FormLabel>
               <Select
                 disabled={loading}
@@ -172,7 +172,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           control={form.control}
           name="date"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4">
+            <FormItem className="flex flex-col">
               <FormLabel className="w-1/6">Data</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -212,7 +212,7 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
           control={form.control}
           name="amount"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4">
+            <FormItem className="flex flex-col">
               <FormLabel className="w-1/6">Valor</FormLabel>
               <FormControl>
                 <CurrencyInput
