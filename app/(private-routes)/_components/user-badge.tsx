@@ -8,11 +8,13 @@ import { useSession } from 'next-auth/react'
 const UserBadge = () => {
   const { data } = useSession()
   return (
-    <Card className="flex items-center py-2 px-4 rounded-lg w-max gap-2">
+    <Card className="flex flex-col items-center py-2 px-4 rounded-lg w-max gap-2">
       <Avatar className="h-6 w-6">
         <AvatarImage src={data?.user?.image ?? ''} />
       </Avatar>
-      <span className="font-bold">{data?.user?.name}</span>
+      <span className="text-[10px] font-bold">
+        {data?.user?.name?.split(' ')[0]}
+      </span>
     </Card>
   )
 }
