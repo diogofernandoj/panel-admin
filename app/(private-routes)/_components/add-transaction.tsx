@@ -26,7 +26,7 @@ const AddTransaction = () => {
         </DialogTrigger>
       </Button>
       <DialogContent>
-        <DialogTitle>Nova transação</DialogTitle>
+        <DialogTitle className="mb-4">Nova transação</DialogTitle>
         <TransactionForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
