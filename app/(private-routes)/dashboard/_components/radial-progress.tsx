@@ -9,7 +9,7 @@ const RadialProgress = ({
 }) => {
   return (
     <div
-      className={`radial-progress text-${barColor}`}
+      className={`hidden md:grid radial-progress text-${barColor}`}
       style={{ '--value': percentage, '--size': '3rem' } as React.CSSProperties}
       role="progressbar"
     >

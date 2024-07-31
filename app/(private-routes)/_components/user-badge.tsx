@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react'
 const UserBadge = () => {
   const { data } = useSession()
   return (
-    <Card className="flex flex-col items-center py-2 px-4 rounded-lg w-max gap-2">
+    <Card className="flex flex-col md:flex-row items-center py-2 px-4 rounded-lg w-max gap-2">
       <Avatar className="h-6 w-6">
         <AvatarImage src={data?.user?.image ?? ''} />
       </Avatar>

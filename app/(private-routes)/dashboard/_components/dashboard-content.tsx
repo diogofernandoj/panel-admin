@@ -27,7 +27,7 @@ const DashboardContent = ({
   }, [transactions, period])
 
   return (
-    <div className="flex flex-col md:flex-row gap-6">
+    <div className="flex flex-col lg:flex-row gap-6">
       <div className="flex flex-col gap-6 flex-1">
         <Cards transactions={filteredTransactions} />
         <TransactionBarChart
@@ -36,7 +36,7 @@ const DashboardContent = ({
           setPeriod={setPeriod}
         />
       </div>
-      <div className="flex flex-col gap-6 w-full md:w-[240px]">
+      <div className="flex flex-col gap-6 w-full lg:w-[240px]">
         <TransactionRadialChart
           totalTransactions={filteredTransactions.length}
         />

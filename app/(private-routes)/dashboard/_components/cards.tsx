@@ -24,48 +24,50 @@ const Cards = ({ transactions }: { transactions: Transaction[] }) => {
     ((totalBalance / (totalEarnings + totalExpenses)) * 100) | 0
 
   return (
-    <div className="flex-col md:flex-row flex items-center gap-6">
-      <Card className="w-full ">
-        <CardHeader className="bg-green-500 m-4 bg-opacity-10 w-max rounded-full p-2">
-          <DollarSignIcon className="text-green-500" />
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-between items-end">
-            <div className="flex flex-col">
-              <span className="font-bold text-sm">
-                {makeCurrencyNumber(totalEarnings)}
-              </span>
-              <span className="text-gray-400 text-xs">Entradas</span>
+    <div className="flex-col md:flex-row flex-wrap flex items-center gap-6">
+      <div className="flex gap-2 w-full">
+        <Card className="w-full">
+          <CardHeader className="bg-green-500 m-4 bg-opacity-10 w-max rounded-full p-2">
+            <DollarSignIcon className="text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between items-end">
+              <div className="flex flex-col">
+                <span className="font-bold text-sm">
+                  {makeCurrencyNumber(totalEarnings)}
+                </span>
+                <span className="text-gray-400 text-xs">Entradas</span>
+              </div>
+              <CardChart
+                percentage={Number(earningsPercentage.toFixed(0))}
+                barColor="green-500"
+              />
             </div>
-            <CardChart
-              percentage={Number(earningsPercentage.toFixed(0))}
-              barColor="green-500"
-            />
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      <Card className="w-full ">
-        <CardHeader className="bg-red-500 m-4 bg-opacity-10 w-max rounded-full p-2">
-          <DollarSignIcon className="text-red-500" />
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-between items-end">
-            <div className="flex flex-col">
-              <span className="font-bold text-sm">
-                {makeCurrencyNumber(totalExpenses)}
-              </span>
-              <span className="text-gray-400 text-xs">Saídas</span>
+        <Card className="w-full">
+          <CardHeader className="bg-red-500 m-4 bg-opacity-10 w-max rounded-full p-2">
+            <DollarSignIcon className="text-red-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between items-end">
+              <div className="flex flex-col">
+                <span className="font-bold text-sm">
+                  {makeCurrencyNumber(totalExpenses)}
+                </span>
+                <span className="text-gray-400 text-xs">Saídas</span>
+              </div>
+              <CardChart
+                percentage={Number(expensesPercentage.toFixed(0))}
+                barColor="red-500"
+              />
             </div>
-            <CardChart
-              percentage={Number(expensesPercentage.toFixed(0))}
-              barColor="red-500"
-            />
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
-      <Card className="w-full ">
+      <Card className="w-full">
         <CardHeader className="bg-blue-500 m-4 bg-opacity-10 w-max rounded-full p-2">
           <ScaleIcon className="text-blue-500" />
         </CardHeader>
