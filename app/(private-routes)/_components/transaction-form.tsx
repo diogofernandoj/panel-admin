@@ -62,7 +62,9 @@ const TransactionForm = ({ setIsOpen, transaction }: TransactionFormProps) => {
     defaultValues: {
       title: transaction?.title || '',
       type: !transaction?.type ? '0' : '1',
-      date: transaction?.date || undefined,
+      date: transaction?.date
+        ? new Date(new Date(transaction?.date).setUTCHours(3, 0, 0, 0))
+        : undefined,
       amount: transaction?.amount || '',
     },
   })
