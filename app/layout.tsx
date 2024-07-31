@@ -24,8 +24,8 @@ export default function RootLayout({
   const theme = cookies().get('theme')?.value ?? ''
 
   return (
-    <html lang="en">
-      <body className={`${poppins.className} ${theme}`}>
+    <html lang="en" className={`${theme} bg-background`}>
+      <body className={`${poppins.className}`}>
         <AuthProvider>
           {children}
           <Toaster />

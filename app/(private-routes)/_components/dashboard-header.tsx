@@ -10,7 +10,9 @@ const DashboardHeader = ({ title }: { title: string }) => {
       <h2 className="font-bold text-2xl">{title}</h2>
       <div className="flex items-center gap-2">
         <AddTransaction />
-        <UserBadge />
+        <div className="hidden md:block">
+          <UserBadge />
+        </div>
       </div>
     </div>
   )

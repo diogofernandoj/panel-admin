@@ -24,7 +24,7 @@ const Cards = ({ transactions }: { transactions: Transaction[] }) => {
     ((totalBalance / (totalEarnings + totalExpenses)) * 100) | 0
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex-col md:flex-row flex items-center gap-6">
       <Card className="w-full ">
         <CardHeader className="bg-green-500 m-4 bg-opacity-10 w-max rounded-full p-2">
           <DollarSignIcon className="text-green-500" />

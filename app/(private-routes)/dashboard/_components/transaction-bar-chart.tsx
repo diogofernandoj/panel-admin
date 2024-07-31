@@ -121,7 +121,7 @@ const TransactionBarChart = ({
   }, [period, transactions])
 
   return (
-    <Card className="w-full flex-1">
+    <Card>
       <CardHeader>
         <CardTitle className="text-base flex justify-between items-center">
           Transações

@@ -41,7 +41,7 @@ const TransactionRadialChart = ({
   ]
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col w-full">
       <CardHeader>
         <CardTitle className="text-base">Total transações</CardTitle>
       </CardHeader>

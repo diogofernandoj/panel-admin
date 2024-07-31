@@ -23,7 +23,7 @@ export default async function PrivateLayout({
   return (
     <div>
       <Navbar />
-      <div className="md:pl-[300px]">{children}</div>
+      <div className="pb-[100px] md:pb-0 md:pl-[300px]">{children}</div>
     </div>
   )
 }

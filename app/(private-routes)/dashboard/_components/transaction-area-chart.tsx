@@ -96,7 +96,7 @@ const TransactionAreaChart = ({
   }, [period, transactions])
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer
           config={chartConfig}
