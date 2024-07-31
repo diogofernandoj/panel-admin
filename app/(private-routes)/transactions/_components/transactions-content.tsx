@@ -65,7 +65,7 @@ const TransactionsContent = ({
   return (
     <div className="flex flex-col gap-4">
       <DashboardHeader title="Transações" />
-      <div className="absolute right-6 top-24 z-10">
+      <div className="absolute md:right-6 top-20 md:top-24 z-10">
         <DateRangePicker date={date} setDate={setDate} />
       </div>
       <DataTable columns={columns} data={filteredTransactions} />

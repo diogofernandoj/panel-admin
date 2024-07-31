@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="relative">
+    <div className="relative mt-8 md:mt-0">
       <div className="py-4">
         <Input
           placeholder="Pesquise aqui..."

@@ -29,21 +29,32 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: 'date',
-    header: 'Data',
+    header: () => {
+      return <span className="text-xs">Data</span>
+    },
     cell: ({ row }) => {
       const date = new Date(new Date(row.original.date).setUTCHours(3, 0, 0, 0))
-      return <span>{format(date, 'dd-MM-yyyy')}</span>
+      return <span className="text-[10px]">{format(date, 'dd-MM-yyyy')}</span>
     },
   },
   {
     accessorKey: 'title',
     header: 'Título',
+    cell: ({ row }) => {
+      return <span className="text-[10px]">{row.original.title}</span>
+    },
   },
   {
     accessorKey: 'amount',
-    header: 'Valor',
+    header: () => {
+      return <span className="text-xs">Valor</span>
+    },
     cell: ({ row }) => {
-      return makeCurrencyNumber(Number(row.original.amount))
+      return (
+        <span className="text-[10px]">
+          {makeCurrencyNumber(Number(row.original.amount))}
+        </span>
+      )
     },
   },
   {
